@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "984831874119",
+    "project_id": "nagda-f4ec1",
+    "storage_bucket": "nagda-f4ec1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984831874119:android:7df23a3ce0c1179c170d62",
+        "android_client_info": {
+          "package_name": "com.dev.nagda"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1JPoxQk6ih4psJDhQCD29SkuoDS0C7Lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984831874119:android:8c26eaa22256b34e170d62",
+        "android_client_info": {
+          "package_name": "com.dev.nagdaadmin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1JPoxQk6ih4psJDhQCD29SkuoDS0C7Lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

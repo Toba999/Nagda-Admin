@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="gray">#999999</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="primary">#1F3A8A</color>
+    <color name="color_call">#1F3A8A</color>
+    <color name="color_call_btn_bg">#364D96</color>
+    <color name="fire_banner">#F64400</color>
+    <color name="secondaryText">#999999</color>
+    <color name="green">#23EF00</color>
+    <color name="strokeColor">#E0E0E0</color>
+    <color name="screenBackground">#F5F5F5</color>
+    <color name="primaryText">#1A1A1A</color>
+    <color name="primaryDesc">#666666</color>
+    <!-- Request Status Colors -->
+    <color name="status_sent">#2ECC71</color>
+    <color name="status_received">#27AE60</color>
+    <color name="status_in_progress">#F39C12</color>
+    <color name="status_on_the_way">#E67E22</color>
+    <color name="status_done">#1A2D6D</color>
+    <color name="status_cancelled">#95A5A6</color>
+    <color name="status_inactive">#CBD4DC</color>
+</resources>

@@ -16,6 +16,7 @@ android {
             minorApiLevel = 1
         }
     }
+    val mapsApiKey = project.findProperty("MAPS_API_KEY") as String? ?: ""
 
     defaultConfig {
         applicationId = "com.dev.nagdaadmin"
@@ -23,7 +24,7 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

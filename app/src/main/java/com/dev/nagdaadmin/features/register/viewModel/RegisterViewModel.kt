@@ -2,6 +2,7 @@ package com.dev.nagdaadmin.features.register.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dev.nagdaadmin.data.model.AdminModel
 import com.dev.nagdaadmin.data.model.UserModel
 import com.dev.nagdaadmin.features.register.models.RegisterState
 import com.dev.nagdaadmin.domain.repo.FireBaseRepo
@@ -20,29 +21,27 @@ class RegisterViewModel @Inject constructor(
     private val _registerState = MutableStateFlow<RegisterState>(RegisterState.Idle)
     val registerState: StateFlow<RegisterState> = _registerState.asStateFlow()
 
-    fun register(
+    fun registerAdmin(
         fullName: String,
         phone: String,
-        mail: String,
-        address: String,
-        familySize: Int,
-        notes: String,
+        email: String,
+        role: String,
         password: String
     ) {
         viewModelScope.launch {
             _registerState.value = RegisterState.Loading
-            val user = UserModel(
+            val admin = AdminModel(
                 fullName = fullName,
                 phone = phone,
-                mail = mail,
-                address = address,
-                familySize = familySize,
-                notes = notes
+                email = email,
+                role = role
             )
-            repo.register(user, password)
+            repo.register(admin, password)
                 .onSuccess { _registerState.value = RegisterState.Success }
                 .onFailure { _registerState.value = RegisterState.Error(
-                    it.message ?: "حدث خطأ أثناء إنشاء الحساب") }
+                    it.message ?: "حدث خطأ أثناء إنشاء حساب المشرف") }
         }
     }
+
+    fun resetState() { _registerState.value = RegisterState.Idle }
 }

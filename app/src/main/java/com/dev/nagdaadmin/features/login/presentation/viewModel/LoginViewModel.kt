@@ -2,8 +2,9 @@ package com.dev.nagdaadmin.features.login.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dev.nagdaadmin.features.login.domain.model.LoginState
+import com.dev.nagdaadmin.data.model.LoginResult
 import com.dev.nagdaadmin.domain.repo.FireBaseRepo
+import com.dev.nagdaadmin.features.login.domain.model.LoginState
 import com.dev.nagdaadmin.utils.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,11 +25,18 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             _loginState.value = LoginState.Loading
             firebaseRepository.login(phone, password)
-                .onSuccess {
-                    sharedPrefManager.putString(KEY_PHONE, phone)
-                    sharedPrefManager.putString(KEY_PASSWORD, password)
-                    sharedPrefManager.putBoolean(KEY_BIOMETRIC_ENABLED, true)
-                    _loginState.value = LoginState.Success(it)
+                .onSuccess { result ->
+                    when (result) {
+                        is LoginResult.Admin -> {
+                            sharedPrefManager.putString(KEY_PHONE, phone)
+                            sharedPrefManager.putString(KEY_PASSWORD, password)
+                            sharedPrefManager.putBoolean(KEY_BIOMETRIC_ENABLED, true)
+                            _loginState.value = LoginState.Success(result.admin)
+                        }
+                        is LoginResult.User -> {
+                            _loginState.value = LoginState.Error("هذا الحساب ليس حساب مشرف")
+                        }
+                    }
                 }
                 .onFailure {
                     _loginState.value = LoginState.Error(
@@ -49,6 +57,8 @@ class LoginViewModel @Inject constructor(
 
     fun isBiometricEnabled(): Boolean =
         sharedPrefManager.getBoolean(KEY_BIOMETRIC_ENABLED, false)
+
+    fun resetState() { _loginState.value = LoginState.Idle }
 
     companion object {
         private const val KEY_PHONE             = "login_phone"

@@ -1,5 +1,7 @@
 package com.dev.nagdaadmin.data.repo
 
+import com.dev.nagdaadmin.data.model.AdminModel
+import com.dev.nagdaadmin.data.model.LoginResult
 import com.dev.nagdaadmin.data.model.RequestModel
 import com.dev.nagdaadmin.data.model.RequestStatus
 import com.dev.nagdaadmin.data.model.UserModel
@@ -9,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import kotlin.jvm.java
 
 class FireBaseRepoImpl @Inject constructor(
     firestore: FirebaseFirestore,
@@ -17,37 +20,37 @@ class FireBaseRepoImpl @Inject constructor(
     private val auth = FirebaseAuth.getInstance()
     private val usersCollection = firestore.collection("users")
     private val requestsCollection = firestore.collection("requests")
+    private val adminsCollection = firestore.collection("admins")
 
-    override suspend fun register(user: UserModel, password: String): Result<Unit> {
+    private fun phoneToEmail(phone: String): String {
+        val sanitized = phone.trim().replace(" ", "").replace("+", "")
+        return "${sanitized}@nagdaAdmin.com"
+    }
+
+    override suspend fun register(user: AdminModel, password: String): Result<Unit> {
         return try {
             val authResult = auth.createUserWithEmailAndPassword(
-                "${user.phone}@nagda.com", password
+                phoneToEmail(user.phone), password
             ).await()
 
             val uid = authResult.user?.uid ?: return Result.failure(Exception("UID is null"))
-
-            val userWithUid = user.copy(uid = uid)
-            usersCollection.document(uid).set(userWithUid).await()
-
+            adminsCollection.document(uid).set(user.copy(uid = uid)).await()
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-    override suspend fun login(phone: String, password: String): Result<UserModel> {
+    override suspend fun login(phone: String, password: String): Result<LoginResult> {
         return try {
             val authResult = auth.signInWithEmailAndPassword(
-                "${phone}@nagda.com", password
+                phoneToEmail(phone), password
             ).await()
-
             val uid = authResult.user?.uid ?: return Result.failure(Exception("UID is null"))
-
-            val snapshot = usersCollection.document(uid).get().await()
-            val user = snapshot.toObject(UserModel::class.java)
-                ?: return Result.failure(Exception("المستخدم غير موجود"))
-
-            Result.success(user)
+            val adminSnapshot = adminsCollection.document(uid).get().await()
+            val admin = adminSnapshot.toObject(AdminModel::class.java)
+                ?: return Result.failure(Exception("بيانات المشرف غير موجودة"))
+            return Result.success(LoginResult.Admin(admin))
         } catch (e: Exception) {
             Result.failure(e)
         }

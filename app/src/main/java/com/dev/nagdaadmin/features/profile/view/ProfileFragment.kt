@@ -91,7 +91,7 @@ class ProfileFragment : Fragment() {
         } else {
             binding.btnSave.text = getString(R.string.signOut)
             binding.btnSave.backgroundTintList = ColorStateList.valueOf(
-                getColor(requireContext(), R.color.primary)
+                getColor(requireContext(), R.color.red)
             )
             binding.btnSave.setOnClickListener {
                 findNavController().navigate(R.id.logoutDialogFragment)

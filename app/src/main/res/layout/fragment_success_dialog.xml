@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginHorizontal="20dp"
+    android:background="@color/white"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="12dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_close" />
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:src="@drawable/ic_check_circle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notokufi_arabic_semibold"
+            android:paddingTop="10dp"
+            android:text="@string/request_sent"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notokufi_arabic_medium"
+            android:paddingTop="10dp"
+            android:text="@string/rescue_team_msg"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <!-- OK Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="36dp"
+            android:text="@string/back_to_home"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:backgroundTint="@color/primary"
+            app:cornerRadius="10dp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

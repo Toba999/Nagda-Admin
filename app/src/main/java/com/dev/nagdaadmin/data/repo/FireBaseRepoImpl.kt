@@ -56,13 +56,13 @@ class FireBaseRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun getProfile(): Result<UserModel> {
+    override suspend fun getProfile(): Result<AdminModel> {
         return try {
             val uid = auth.currentUser?.uid
                 ?: return Result.failure(Exception("المستخدم غير مسجل الدخول"))
 
-            val user = usersCollection.document(uid).get().await()
-                .toObject(UserModel::class.java)
+            val user = adminsCollection.document(uid).get().await()
+                .toObject(AdminModel::class.java)
                 ?: return Result.failure(Exception("المستخدم غير موجود"))
 
             Result.success(user)
@@ -71,19 +71,17 @@ class FireBaseRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateProfile(user: UserModel): Result<Unit> {
+    override suspend fun updateProfile(user: AdminModel): Result<Unit> {
         return try {
             val uid = auth.currentUser?.uid
                 ?: return Result.failure(Exception("المستخدم غير مسجل الدخول"))
 
-            usersCollection.document(uid).update(
+            adminsCollection.document(uid).update(
                 mapOf(
                     "fullName"   to user.fullName,
                     "phone"      to user.phone,
-                    "address"    to user.address,
-                    "mail"       to user.mail,
-                    "familySize" to user.familySize,
-                    "notes"      to user.notes
+                    "role"    to user.role,
+                    "mail"       to user.email
                 )
             ).await()
 

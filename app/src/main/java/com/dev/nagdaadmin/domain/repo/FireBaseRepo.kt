@@ -9,8 +9,8 @@ import com.dev.nagdaadmin.data.model.UserModel
 interface FireBaseRepo {
     suspend fun register(user: AdminModel, password: String): Result<Unit>
     suspend fun login(phone: String, password: String):Result<LoginResult>
-    suspend fun getProfile(): Result<UserModel>
-    suspend fun updateProfile(user: UserModel): Result<Unit>
+    suspend fun getProfile(): Result<AdminModel>
+    suspend fun updateProfile(user: AdminModel): Result<Unit>
     suspend fun sendRequest(request: RequestModel): Result<Unit>
     suspend fun getUserRequests(): Result<List<RequestModel>>
     suspend fun getRequestDetails(requestId: String): Result<RequestModel>

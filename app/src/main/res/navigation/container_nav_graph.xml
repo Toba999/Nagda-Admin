@@ -2,24 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/container_nav_graph">
-<!--    app:startDestination="@id/homeFragment">-->
+    android:id="@+id/container_nav_graph"
+    app:startDestination="@id/profileFragment">
 
-<!--    <fragment-->
-<!--        android:id="@+id/homeFragment"-->
-<!--        android:name="com.dev.nagda.features.home.view.HomeFragment"-->
-<!--        android:label="fragment_home"-->
-<!--        tools:layout="@layout/fragment_home" />-->
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.dev.nagdaadmin.features.profile.view.ProfileFragment"
+        android:label="ProfileFragment" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/safetyGuideFragment"-->
-<!--        android:name="com.dev.nagda.features.safetyGuide.view.SafetyGuideFragment"-->
-<!--        android:label="SafetyGuideFragment" />-->
-
-<!--    <fragment-->
-<!--        android:id="@+id/profileFragment"-->
-<!--        android:name="com.dev.nagda.features.profile.view.ProfileFragment"-->
-<!--        android:label="ProfileFragment" />-->
 <!--    <fragment-->
 <!--        android:id="@+id/requestsFragment"-->
 <!--        android:name="com.dev.nagda.features.requests.view.RequestsFragment"-->
@@ -27,39 +17,34 @@
 <!--        tools:layout="@layout/fragment_requests" />-->
 
 
-<!--        <dialog-->
-<!--        android:id="@+id/successDialogFragment"-->
-<!--        android:name="com.dev.nagda.features.dialogs.SuccessDialogFragment"-->
-<!--        android:label="Success Dialog"-->
-<!--        tools:layout="@layout/fragment_success_dialog"-->
-<!--        android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert">-->
-<!--        <argument-->
-<!--            android:name="title"-->
-<!--            app:argType="string"-->
-<!--            android:defaultValue="تم تقديم الطلب بنجاح"/>-->
-<!--        <argument-->
-<!--            android:name="icon"-->
-<!--            app:argType="string"-->
-<!--            android:defaultValue="0"/>-->
-<!--    </dialog>-->
+        <dialog
+        android:id="@+id/successDialogFragment"
+        android:name="com.dev.nagdaadmin.features.dialogs.SuccessDialogFragment"
+        android:label="Success Dialog"
+        tools:layout="@layout/fragment_success_dialog"
+        android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert">
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="تم تقديم الطلب بنجاح"/>
+        <argument
+            android:name="icon"
+            app:argType="string"
+            android:defaultValue="0"/>
+    </dialog>
 
-<!--    <dialog-->
-<!--        android:id="@+id/logoutDialogFragment"-->
-<!--        android:name="com.dev.nagda.features.dialogs.LogoutDialogFragment"-->
-<!--        android:label="Logout Dialog"-->
-<!--        tools:layout="@layout/fragment_logout_dialog"-->
-<!--        android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert">-->
-<!--        <action-->
-<!--            android:id="@+id/action_logoutDialogFragment_to_LoginFragment"-->
-<!--            app:destination="@id/LoginFragment"-->
-<!--            app:popUpTo="@id/containerFragment"-->
-<!--            app:popUpToInclusive="true"/>-->
-<!--    </dialog>-->
-<!--    <fragment-->
-<!--        android:id="@+id/addRequestFragment"-->
-<!--        android:name="com.dev.nagda.features.addRequest.view.AddRequestFragment"-->
-<!--        android:label="AddRequestFragment" />-->
-<!--    <fragment-->
+    <dialog
+        android:id="@+id/logoutDialogFragment"
+        android:name="com.dev.nagdaadmin.features.dialogs.LogoutDialogFragment"
+        android:label="Logout Dialog"
+        tools:layout="@layout/fragment_logout_dialog"
+        android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert">
+        <action
+            android:id="@+id/action_logoutDialogFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment"
+            app:popUpTo="@id/containerFragment"
+            app:popUpToInclusive="true"/>
+    </dialog>
 <!--        android:id="@+id/mapFragment"-->
 <!--        android:name="com.dev.nagda.features.mapScreen.MapFragment"-->
 <!--        android:label="MapFragment" />-->

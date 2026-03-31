@@ -71,6 +71,17 @@ class FireBaseRepoImpl @Inject constructor(
         }
     }
 
+    override suspend fun getUserDetails(uid: String): Result<UserModel> {
+        return try {
+            val user = usersCollection.document(uid).get().await()
+                .toObject(UserModel::class.java)
+                ?: return Result.failure(Exception("المستخدم غير موجود"))
+            Result.success(user)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     override suspend fun updateProfile(user: AdminModel): Result<Unit> {
         return try {
             val uid = auth.currentUser?.uid

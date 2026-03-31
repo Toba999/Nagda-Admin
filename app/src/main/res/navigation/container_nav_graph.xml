@@ -10,13 +10,6 @@
         android:name="com.dev.nagdaadmin.features.profile.view.ProfileFragment"
         android:label="ProfileFragment" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/requestsFragment"-->
-<!--        android:name="com.dev.nagda.features.requests.view.RequestsFragment"-->
-<!--        android:label="fragment_requests"-->
-<!--        tools:layout="@layout/fragment_requests" />-->
-
-
         <dialog
         android:id="@+id/successDialogFragment"
         android:name="com.dev.nagdaadmin.features.dialogs.SuccessDialogFragment"
@@ -45,14 +38,14 @@
             app:popUpTo="@id/containerFragment"
             app:popUpToInclusive="true"/>
     </dialog>
-<!--        android:id="@+id/mapFragment"-->
-<!--        android:name="com.dev.nagda.features.mapScreen.MapFragment"-->
-<!--        android:label="MapFragment" />-->
-<!--    <fragment-->
-<!--        android:id="@+id/requestDetailsFragment"-->
-<!--        android:name="com.dev.nagda.features.requestDetails.view.RequestDetailsFragment"-->
-<!--        android:label="fragment_request_details"-->
-<!--        tools:layout="@layout/fragment_request_details" />-->
-
+    <fragment
+        android:id="@+id/requestsFragment"
+        android:name="com.dev.nagdaadmin.features.requests.view.RequestsFragment"
+        android:label="fragment_requests"
+        tools:layout="@layout/fragment_requests" />
+    <fragment
+        android:id="@+id/requestDetailsFragment"
+        android:name="com.dev.nagdaadmin.features.requestDetails.view.RequestDetailsFragment"
+        android:label="RequestDetailsFragment" />
 
 </navigation>

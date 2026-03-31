@@ -11,8 +11,7 @@ interface FireBaseRepo {
     suspend fun login(phone: String, password: String):Result<LoginResult>
     suspend fun getProfile(): Result<AdminModel>
     suspend fun updateProfile(user: AdminModel): Result<Unit>
-    suspend fun sendRequest(request: RequestModel): Result<Unit>
-    suspend fun getUserRequests(): Result<List<RequestModel>>
+    suspend fun getAllRequests(): Result<List<RequestModel>>
     suspend fun getRequestDetails(requestId: String): Result<RequestModel>
     suspend fun cancelRequest(requestId: String): Result<Unit>
 }

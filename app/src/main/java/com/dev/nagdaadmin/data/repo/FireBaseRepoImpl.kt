@@ -91,30 +91,9 @@ class FireBaseRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun sendRequest(request: RequestModel): Result<Unit> {
+    override suspend fun getAllRequests(): Result<List<RequestModel>> {
         return try {
-            val uid = auth.currentUser?.uid
-                ?: return Result.failure(Exception("المستخدم غير مسجل الدخول"))
-
-            val docRef = requestsCollection.document()
-            val requestWithIds = request.copy(
-                id  = docRef.id,
-                uid = uid
-            )
-            docRef.set(requestWithIds).await()
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
-
-    override suspend fun getUserRequests(): Result<List<RequestModel>> {
-        return try {
-            val uid = auth.currentUser?.uid
-                ?: return Result.failure(Exception("المستخدم غير مسجل الدخول"))
-
             val snapshot = requestsCollection
-                .whereEqualTo("uid", uid)
                 .orderBy("createdAt", Query.Direction.DESCENDING)
                 .get()
                 .await()
@@ -127,6 +106,7 @@ class FireBaseRepoImpl @Inject constructor(
             Result.failure(e)
         }
     }
+
     override suspend fun getRequestDetails(requestId: String): Result<RequestModel> {
         return try {
             val snapshot = requestsCollection.document(requestId).get().await()

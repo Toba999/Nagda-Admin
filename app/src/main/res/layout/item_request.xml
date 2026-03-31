@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="@color/white"
+    android:layoutDirection="rtl"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:padding="12dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/statusContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/status_sent"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notokufi_arabic_semibold"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="تم الإرسال" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/icLocation"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_location"
+            app:layout_constraintStart_toEndOf="@+id/tvLocation"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primaryText" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="200dp"
+            android:ellipsize="start"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/notokufi_arabic_regular"
+            android:textColor="@color/primaryText"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="القاهرة" />
+
+        <ImageView
+            android:id="@+id/ivTypeBg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/circle_request_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLocation" />
+
+        <ImageView
+            android:id="@+id/ivTypeIcon"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@drawable/ic_accident"
+            app:layout_constraintBottom_toBottomOf="@id/ivTypeBg"
+            app:layout_constraintEnd_toEndOf="@id/ivTypeBg"
+            app:layout_constraintStart_toStartOf="@id/ivTypeBg"
+            app:layout_constraintTop_toTopOf="@id/ivTypeBg"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/notokufi_arabic_semibold"
+            android:textColor="@color/primaryText"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/ivTypeBg"
+            app:layout_constraintStart_toEndOf="@id/ivTypeBg"
+            app:layout_constraintTop_toTopOf="@id/ivTypeBg"
+            tools:text="حادث" />
+
+        <View
+            android:id="@+id/headerDivider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="16dp"
+            android:background="#EAEAEA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivTypeBg" />
+
+        <TextView
+            android:id="@+id/tvDetailsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/notokufi_arabic_semibold"
+            android:text="@string/details"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headerDivider" />
+
+        <TextView
+            android:id="@+id/tvDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/notokufi_arabic_regular"
+            android:maxLines="2"
+            android:lineSpacingExtra="4dp"
+            android:textColor="@color/primaryText"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDetailsTitle"
+            tools:text="تصادم بين مركبتين عند التقاطع الرئيسي، وجود مصابين وحركة المرور متوقفة جزئيًا." />
+
+        <TextView
+            android:id="@+id/tvMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/notokufi_arabic_semibold"
+            android:text="@string/more"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDetails" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

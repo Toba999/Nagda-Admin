@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:id="@+id/tvFilter"
+    android:layout_width="wrap_content"
+    android:layout_height="36dp"
+    android:gravity="center"
+    android:paddingHorizontal="16dp"
+    android:fontFamily="@font/notokufi_arabic_medium"
+    android:text="تم الاستلام"
+    android:textSize="13sp"
+    android:layout_marginStart="8dp"
+    android:background="@drawable/bg_filter_inactive"
+    android:textColor="@color/primaryText"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

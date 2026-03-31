@@ -11,12 +11,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dev.nagdaadmin.R
+import com.dev.nagdaadmin.data.model.RequestModel
+import com.dev.nagdaadmin.data.model.RequestStatus
 import com.dev.nagdaadmin.databinding.FragmentRequestsBinding
 import com.dev.nagdaadmin.features.requests.viewModel.RequestsViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlin.collections.filter
 
 @AndroidEntryPoint
 class RequestsFragment : Fragment() {
@@ -25,6 +28,9 @@ class RequestsFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: RequestsViewModel by viewModels()
     private lateinit var adapter: RequestsAdapter
+
+    private var allRequests: List<RequestModel> = emptyList()
+    private var selectedFilter: RequestStatus? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +43,7 @@ class RequestsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        setupFilters()
         observeState()
         viewModel.getUserRequests()
     }
@@ -52,6 +59,34 @@ class RequestsFragment : Fragment() {
         }
     }
 
+    private fun setupFilters() {
+        binding.rvFilters.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(), LinearLayoutManager.HORIZONTAL, false
+            )
+            adapter = FilterTabAdapter { status ->
+                selectedFilter = status
+                applyFilter()
+            }
+        }
+    }
+
+    private fun applyFilter() {
+        val filtered = if (selectedFilter == null)
+            allRequests
+        else
+            allRequests.filter { it.status == selectedFilter }
+
+        if (filtered.isEmpty()) {
+            showEmpty(true)
+            showList(false)
+        } else {
+            showEmpty(false)
+            showList(true)
+            adapter.updateList(filtered)
+        }
+    }
+
     private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.requestsState.collectLatest { state ->
@@ -63,9 +98,8 @@ class RequestsFragment : Fragment() {
                     }
                     is RequestsState.Success -> {
                         showLoading(false)
-                        showEmpty(false)
-                        showList(true)
-                        adapter.updateList(state.requests)
+                        allRequests = state.requests
+                        applyFilter()
                     }
                     is RequestsState.Empty -> {
                         showLoading(false)
@@ -75,7 +109,7 @@ class RequestsFragment : Fragment() {
                     is RequestsState.Error -> {
                         showLoading(false)
                         showEmpty(true)
-                        //showSnackBar(state.message)
+                        showSnackBar(state.message)
                     }
                     else -> Unit
                 }

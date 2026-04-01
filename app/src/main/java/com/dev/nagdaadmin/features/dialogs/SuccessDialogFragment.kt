@@ -1,5 +1,6 @@
 package com.dev.nagdaadmin.features.dialogs
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,6 +16,8 @@ class SuccessDialogFragment : DialogFragment() {
     private var _binding: FragmentSuccessDialogBinding? = null
     private val binding get() = _binding!!
 
+    var onConfirmed: (() -> Unit)? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,12 +26,16 @@ class SuccessDialogFragment : DialogFragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnOk.setOnClickListener {
-            dismiss()
+        val statusLabel = arguments?.getString(ARG_STATUS_LABEL) ?: ""
+        binding.tvStatus.text = "$statusLabel؟"
 
+        binding.btnOk.setOnClickListener {
+            onConfirmed?.invoke()
+            dismiss()
         }
 
         binding.ivClose.setOnClickListener {
@@ -51,5 +58,20 @@ class SuccessDialogFragment : DialogFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
+    companion object {
+        const val ARG_STATUS_LABEL = "status_label"
+
+        fun newInstance(statusLabel: String): SuccessDialogFragment {
+            return SuccessDialogFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_STATUS_LABEL, statusLabel)
+                }
+            }
+        }
+    }
 }

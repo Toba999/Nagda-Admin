@@ -1,5 +1,6 @@
 package com.dev.nagdaadmin.features.requestDetails.view
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.dev.nagdaadmin.data.model.RequestModel
 import com.dev.nagdaadmin.data.model.RequestStatus
 import com.dev.nagdaadmin.data.model.UserModel
 import com.dev.nagdaadmin.databinding.FragmentRequestDetailsBinding
+import com.dev.nagdaadmin.features.dialogs.SuccessDialogFragment
 import com.dev.nagdaadmin.features.requestDetails.viewModel.RequestDetailsState
 import com.dev.nagdaadmin.features.requestDetails.viewModel.RequestDetailsViewModel
 import com.dev.nagdaadmin.utils.DateAndTimePicker.toArabicDateTime
@@ -37,6 +39,7 @@ class RequestDetailsFragment : Fragment() {
     private val viewModel: RequestDetailsViewModel by viewModels()
     private var googleMap: GoogleMap? = null
     private var pendingLatLng: LatLng? = null
+    private var currentRequest: RequestModel? = null
 
     private val requestId by lazy { arguments?.getString("requestId") ?: "" }
 
@@ -61,10 +64,22 @@ class RequestDetailsFragment : Fragment() {
 
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
         binding.btnStatus.setOnClickListener {
-//            findNavController().popBackStack()
+            val request = currentRequest ?: return@setOnClickListener
+            val nextStatus = request.status.next() ?: return@setOnClickListener
+
+            SuccessDialogFragment.newInstance(nextStatus.label).apply {
+                onConfirmed = {
+                    viewModel.moveToNextStatus(requestId, request.status)
+                }
+            }.show(childFragmentManager, "status_dialog")
         }
+
         binding.btnCancel.setOnClickListener {
-//            viewModel.cancelRequest(requestId)
+            SuccessDialogFragment.newInstance("تم الالغاء").apply {
+                onConfirmed = {
+                    viewModel.cancelRequest(requestId)
+                }
+            }.show(childFragmentManager, "cancel_dialog")
         }
     }
 
@@ -87,7 +102,9 @@ class RequestDetailsFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun bindDetails(request: RequestModel, user: UserModel) {
+        currentRequest = request
         with(binding) {
             statusContainer.backgroundTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(root.context, request.status.colorRes)

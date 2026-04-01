@@ -49,12 +49,14 @@ class RequestDetailsViewModel @Inject constructor(
         }
     }
 
-    fun updateRequestStatus(requestId: String, status: RequestStatus) {
+    fun moveToNextStatus(requestId: String, currentStatus: RequestStatus) {
+        val nextStatus = currentStatus.next() ?: return
         viewModelScope.launch {
-            repo.updateRequestStatus(requestId, status)
-                .onSuccess { getRequestDetails(requestId) }
+            repo.updateRequestStatus(requestId, nextStatus)
+                .onSuccess { getRequestDetails(requestId) } // auto refetch
                 .onFailure { _detailsState.value = RequestDetailsState.Error(
                     it.message ?: "حدث خطأ") }
         }
     }
+
 }

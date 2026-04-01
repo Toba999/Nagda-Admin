@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.dev.nagdaadmin.data.model.RequestModel
 import com.dev.nagdaadmin.databinding.ItemRequestBinding
+import com.dev.nagdaadmin.utils.DateAndTimePicker.toArabicTimeAgo
 
 class RequestsAdapter(
     private var items: List<RequestModel>,
@@ -35,6 +36,7 @@ class RequestsAdapter(
             ivTypeIcon.setImageResource(item.type.iconRes)
             tvDetails.text = item.details
             tvMore.setOnClickListener { onMoreClick(item.id) }
+            tvDetailsTime.text = item.createdAt.toArabicTimeAgo()
         }
     }
 

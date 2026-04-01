@@ -18,6 +18,7 @@ import com.dev.nagdaadmin.data.model.bannerContent
 import com.dev.nagdaadmin.databinding.FragmentRequestDetailsBinding
 import com.dev.nagdaadmin.features.requestDetails.viewModel.RequestDetailsState
 import com.dev.nagdaadmin.features.requestDetails.viewModel.RequestDetailsViewModel
+import com.dev.nagdaadmin.utils.DateAndTimePicker.toArabicDateTime
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -79,15 +80,14 @@ class RequestDetailsFragment : Fragment() {
 
     private fun bindDetails(request: RequestModel) {
         with(binding) {
-            val (title, desc) = request.status.bannerContent()
-            tvStatusTitle.text = title
-            tvStatusDesc.text  = desc
-            statusBanner.backgroundTintList = ColorStateList.valueOf(
+            statusContainer.backgroundTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(root.context, request.status.colorRes)
             )
             tvLocation.text = request.location
             tvType.text     = request.type.label
             tvDetails.text  = request.details.ifEmpty { "لا توجد تفاصيل" }
+            tvDetailsTime.text = request.createdAt.toArabicDateTime()
+            tvStatus.text = request.status.label
             ivTypeIcon.setImageResource(request.type.iconRes)
 
             btnCancel.isVisible = request.status == RequestStatus.SENT

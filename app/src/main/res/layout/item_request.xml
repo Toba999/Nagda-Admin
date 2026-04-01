@@ -39,14 +39,37 @@
         </androidx.cardview.widget.CardView>
 
         <ImageView
+            android:id="@+id/icTime"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/ic_clock"
+            app:layout_constraintStart_toEndOf="@+id/tvDetailsTime"
+            app:layout_constraintTop_toTopOf="@+id/tvDetailsTime"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDetailsTime"
+            app:tint="@color/primaryText" />
+
+        <TextView
+            android:id="@+id/tvDetailsTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/notokufi_arabic_regular"
+            tools:text="الأحد، 8 فبراير 2026 - 2:35 م"
+            android:textColor="@color/primaryText"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
             android:id="@+id/icLocation"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginStart="8dp"
             android:src="@drawable/ic_location"
             app:layout_constraintStart_toEndOf="@+id/tvLocation"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/primaryText" />
+            app:layout_constraintTop_toTopOf="@+id/tvLocation"
+            app:layout_constraintBottom_toBottomOf="@+id/tvLocation"            app:tint="@color/primaryText" />
 
         <TextView
             android:id="@+id/tvLocation"
@@ -54,11 +77,12 @@
             android:ellipsize="start"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/notokufi_arabic_regular"
             android:textColor="@color/primaryText"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailsTime"
             tools:text="القاهرة" />
 
         <ImageView

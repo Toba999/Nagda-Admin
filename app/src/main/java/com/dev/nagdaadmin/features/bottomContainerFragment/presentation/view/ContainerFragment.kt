@@ -53,20 +53,16 @@ class ContainerFragment : Fragment() {
             childFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavView.setupWithNavController(navController)
-//        binding.bottomNavView.selectedItemId = R.id.homeFragment
-
+        binding.bottomNavView.selectedItemId = R.id.requestsFragment
         navController.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.safetyGuideFragment,
-//                R.id.mapFragment,
-//                R.id.addRequestFragment,
-//                R.id.requestDetailsFragment -> {
-//                    binding.bottomNavView.visibility = View.GONE
-//                }
-//                else -> {
-//                    binding.bottomNavView.visibility = View.VISIBLE
-//                }
-//            }
+            when (destination.id) {
+                R.id.requestDetailsFragment -> {
+                    binding.bottomNavView.visibility = View.GONE
+                }
+                else -> {
+                    binding.bottomNavView.visibility = View.VISIBLE
+                }
+            }
         }
 
     }

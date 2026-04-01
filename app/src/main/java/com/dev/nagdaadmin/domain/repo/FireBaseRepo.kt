@@ -3,6 +3,7 @@ package com.dev.nagdaadmin.domain.repo
 import com.dev.nagdaadmin.data.model.AdminModel
 import com.dev.nagdaadmin.data.model.LoginResult
 import com.dev.nagdaadmin.data.model.RequestModel
+import com.dev.nagdaadmin.data.model.RequestStatus
 import com.dev.nagdaadmin.data.model.UserModel
 
 
@@ -15,4 +16,5 @@ interface FireBaseRepo {
     suspend fun getAllRequests(): Result<List<RequestModel>>
     suspend fun getRequestDetails(requestId: String): Result<RequestModel>
     suspend fun cancelRequest(requestId: String): Result<Unit>
+    suspend fun updateRequestStatus(requestId: String, status: RequestStatus): Result<Unit>
 }

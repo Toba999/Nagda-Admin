@@ -139,4 +139,16 @@ class FireBaseRepoImpl @Inject constructor(
             Result.failure(e)
         }
     }
+
+    override suspend fun updateRequestStatus(requestId: String, status: RequestStatus): Result<Unit> {
+        return try {
+            requestsCollection.document(requestId)
+                .update("status", status.name)
+                .await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 }

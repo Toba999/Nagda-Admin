@@ -2,6 +2,7 @@ package com.dev.nagdaadmin.features.requestDetails.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dev.nagdaadmin.data.model.RequestStatus
 import com.dev.nagdaadmin.domain.repo.FireBaseRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,15 +23,35 @@ class RequestDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _detailsState.value = RequestDetailsState.Loading
             repo.getRequestDetails(requestId)
-                .onSuccess { _detailsState.value = RequestDetailsState.Success(it) }
-                .onFailure { _detailsState.value = RequestDetailsState.Error(
-                    it.message ?: "حدث خطأ") }
+                .onSuccess { request ->
+                    repo.getUserDetails(request.uid)
+                        .onSuccess { user ->
+                            _detailsState.value = RequestDetailsState.Success(request, user)
+                        }
+                        .onFailure {
+                            _detailsState.value = RequestDetailsState.Error(
+                                it.message ?: "حدث خطأ في جلب بيانات المستخدم")
+                        }
+                }
+                .onFailure {
+                    _detailsState.value = RequestDetailsState.Error(
+                        it.message ?: "حدث خطأ")
+                }
         }
     }
 
     fun cancelRequest(requestId: String) {
         viewModelScope.launch {
             repo.cancelRequest(requestId)
+                .onSuccess { getRequestDetails(requestId) }
+                .onFailure { _detailsState.value = RequestDetailsState.Error(
+                    it.message ?: "حدث خطأ") }
+        }
+    }
+
+    fun updateRequestStatus(requestId: String, status: RequestStatus) {
+        viewModelScope.launch {
+            repo.updateRequestStatus(requestId, status)
                 .onSuccess { getRequestDetails(requestId) }
                 .onFailure { _detailsState.value = RequestDetailsState.Error(
                     it.message ?: "حدث خطأ") }

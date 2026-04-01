@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.dev.nagdaadmin.R
 import com.dev.nagdaadmin.data.model.RequestModel
 import com.dev.nagdaadmin.data.model.RequestStatus
-import com.dev.nagdaadmin.data.model.bannerContent
+import com.dev.nagdaadmin.data.model.UserModel
 import com.dev.nagdaadmin.databinding.FragmentRequestDetailsBinding
 import com.dev.nagdaadmin.features.requestDetails.viewModel.RequestDetailsState
 import com.dev.nagdaadmin.features.requestDetails.viewModel.RequestDetailsViewModel
@@ -36,7 +36,7 @@ class RequestDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: RequestDetailsViewModel by viewModels()
     private var googleMap: GoogleMap? = null
-    val mapFragment by lazy { childFragmentManager.findFragmentById(R.id.mapPreview) as SupportMapFragment }
+    private var pendingLatLng: LatLng? = null
 
     private val requestId by lazy { arguments?.getString("requestId") ?: "" }
 
@@ -47,16 +47,22 @@ class RequestDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Init map here — not inside bindDetails
+        (childFragmentManager.findFragmentById(R.id.mapPreview) as SupportMapFragment)
+            .getMapAsync { map ->
+                googleMap = map
+                map.uiSettings.isScrollGesturesEnabled = false
+                map.uiSettings.isZoomGesturesEnabled   = false
+                pendingLatLng?.let { pinLocation(it) }
+            }
+
         viewModel.getRequestDetails(requestId)
         observeState()
 
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
-        binding.btnGoHome.setOnClickListener {
-//            findNavController().navigate(R.id.homeFragment)
-        }
-        binding.btnCancel.setOnClickListener {
-            viewModel.cancelRequest(requestId)
-        }
+        binding.btnGoHome.setOnClickListener { findNavController().popBackStack() }
+        binding.btnCancel.setOnClickListener { viewModel.cancelRequest(requestId) }
     }
 
     private fun observeState() {
@@ -66,7 +72,7 @@ class RequestDetailsFragment : Fragment() {
                     is RequestDetailsState.Loading -> showLoading(true)
                     is RequestDetailsState.Success -> {
                         showLoading(false)
-                        bindDetails(state.request)
+                        bindDetails(state.request, state.user)
                     }
                     is RequestDetailsState.Error -> {
                         showLoading(false)
@@ -78,30 +84,33 @@ class RequestDetailsFragment : Fragment() {
         }
     }
 
-    private fun bindDetails(request: RequestModel) {
+    private fun bindDetails(request: RequestModel, user: UserModel) {
         with(binding) {
             statusContainer.backgroundTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(root.context, request.status.colorRes)
             )
-            tvLocation.text = request.location
-            tvType.text     = request.type.label
-            tvDetails.text  = request.details.ifEmpty { "لا توجد تفاصيل" }
+            tvLocation.text    = request.location
+            tvType.text        = request.type.label
+            tvDetails.text     = request.details.ifEmpty { "لا توجد تفاصيل" }
             tvDetailsTime.text = request.createdAt.toArabicDateTime()
-            tvStatus.text = request.status.label
+            tvStatus.text      = request.status.label
             ivTypeIcon.setImageResource(request.type.iconRes)
+            tvUserName.text       = user.fullName
+            tvUserPhone.text      = user.phone
+            tvUserAddress.text    = user.address
+            tvUserFamilySize.text = "${user.familySize} أشخاص"
+            btnCancel.isVisible   = request.status == RequestStatus.SENT
+        }
 
-            btnCancel.isVisible = request.status == RequestStatus.SENT
-            mapFragment.getMapAsync { map ->
-                googleMap = map
-                val latLng = LatLng(request.latitude, request.longitude)
-                googleMap?.apply {
-                    clear()
-                    addMarker(MarkerOptions().position(latLng).title(request.location))
-                    moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                    uiSettings.isScrollGesturesEnabled = false
-                    uiSettings.isZoomGesturesEnabled   = false
-                }
-            }
+        val latLng = LatLng(request.latitude, request.longitude)
+        if (googleMap != null) pinLocation(latLng) else pendingLatLng = latLng
+    }
+
+    private fun pinLocation(latLng: LatLng) {
+        googleMap?.apply {
+            clear()
+            addMarker(MarkerOptions().position(latLng))
+            moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
         }
     }
 

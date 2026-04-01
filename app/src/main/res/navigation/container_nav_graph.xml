@@ -47,5 +47,9 @@
         android:id="@+id/requestDetailsFragment"
         android:name="com.dev.nagdaadmin.features.requestDetails.view.RequestDetailsFragment"
         android:label="RequestDetailsFragment" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.dev.nagdaadmin.features.mapScreen.MapFragment"
+        android:label="MapFragment" />
 
 </navigation>

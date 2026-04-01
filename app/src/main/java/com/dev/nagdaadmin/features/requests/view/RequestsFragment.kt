@@ -51,7 +51,7 @@ class RequestsFragment : Fragment() {
     private fun setupRecyclerView() {
         adapter = RequestsAdapter(emptyList()) { id ->
             val bundle = Bundle().apply { putString("requestId", id) }
-            findNavController().navigate(R.id.requestDetailsFragment, bundle)
+            findNavController().navigate(R.id.mapFragment, bundle)
         }
         binding.rvRequests.apply {
             layoutManager = LinearLayoutManager(requireContext())

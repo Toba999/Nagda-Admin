@@ -61,4 +61,8 @@
     <string name="login_admin">تسجيل الدخول الإدارة</string>
     <string name="job_desc">المسمي الوظيفي</string>
     <string name="personal_info_title">معلومات المبلّغ</string>
+    <string name="confirm_process">تأكيد الإجراء</string>
+    <string name="change_status_question">هل تريد تغيير الحالة إلى</string>
+    <string name="confirm">تأكيد</string>
+    <string name="recieve_request">استلام البلاغ</string>
 </resources>

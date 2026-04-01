@@ -48,7 +48,6 @@ class RequestDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Init map here — not inside bindDetails
         (childFragmentManager.findFragmentById(R.id.mapPreview) as SupportMapFragment)
             .getMapAsync { map ->
                 googleMap = map
@@ -61,8 +60,12 @@ class RequestDetailsFragment : Fragment() {
         observeState()
 
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
-        binding.btnGoHome.setOnClickListener { findNavController().popBackStack() }
-        binding.btnCancel.setOnClickListener { viewModel.cancelRequest(requestId) }
+        binding.btnStatus.setOnClickListener {
+//            findNavController().popBackStack()
+        }
+        binding.btnCancel.setOnClickListener {
+//            viewModel.cancelRequest(requestId)
+        }
     }
 
     private fun observeState() {
@@ -100,6 +103,12 @@ class RequestDetailsFragment : Fragment() {
             tvUserAddress.text    = user.address
             tvUserFamilySize.text = "${user.familySize} أشخاص"
             btnCancel.isVisible   = request.status == RequestStatus.SENT
+            btnStatus.isVisible   = request.status.hasNext()
+            btnStatus.text   = request.status.next()?.label
+            btnStatus.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(root.context, request.status.next()?.colorRes
+                    ?: R.color.primary)
+            )
         }
 
         val latLng = LatLng(request.latitude, request.longitude)

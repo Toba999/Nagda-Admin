@@ -16,10 +16,10 @@
     <color name="primaryDesc">#666666</color>
     <!-- Request Status Colors -->
     <color name="status_sent">#2ECC71</color>
-    <color name="status_received">#27AE60</color>
-    <color name="status_in_progress">#F39C12</color>
-    <color name="status_on_the_way">#E67E22</color>
-    <color name="status_done">#1A2D6D</color>
+    <color name="status_received">#15803D</color>
+    <color name="status_in_progress">#F59E0B</color>
+    <color name="status_on_the_way">#EA580C</color>
+    <color name="status_done">#166534</color>
     <color name="status_cancelled">#95A5A6</color>
     <color name="status_inactive">#CBD4DC</color>
 </resources>

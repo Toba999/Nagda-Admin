@@ -117,9 +117,16 @@ class RequestsFragment : Fragment() {
         }
     }
 
-    private fun showLoading(show: Boolean) { binding.loadingView.root.isVisible = show }
-    private fun showEmpty(show: Boolean)   { binding.tvEmpty.isVisible = show }
-    private fun showList(show: Boolean)    { binding.rvRequests.isVisible = show }
+    private fun showLoading(show: Boolean) {
+        binding.loadingView.root.isVisible = show
+    }
+    private fun showEmpty(show: Boolean)   {
+        binding.tvEmpty.isVisible = show
+        binding.ivEmpty.isVisible = show
+    }
+    private fun showList(show: Boolean)    {
+        binding.rvRequests.isVisible = show
+    }
 
     private fun showSnackBar(message: String) {
         Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).apply {
